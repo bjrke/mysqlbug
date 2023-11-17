@@ -1,10 +1,9 @@
 plugins {
-    application
+    java
+    id("com.diffplug.spotless").version("6.22.0")
 }
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
@@ -13,11 +12,9 @@ dependencies {
     implementation("com.mysql:mysql-connector-j:8.2.0")
 }
 
-
-application {
-    mainClass.set("de.bjrke.mysqlbug.App")
+spotless {
+    java { googleJavaFormat("1.17.0").reorderImports(true).aosp() }
+    kotlinGradle { ktfmt().kotlinlangStyle() }
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-}
+tasks.named<Test>("test") { useJUnitPlatform() }
